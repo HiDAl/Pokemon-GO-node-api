@@ -53,53 +53,13 @@ a.init(username, password, location, provider, function(err) {
                 }
 
                 for (var i = hb.cells.length - 1; i >= 0; i--) {
+                    // console.log(hb);
                     if(hb.cells[i].NearbyPokemon[0]) {
-                        //console.log(a.pokemonlist[0])
                         var pokemon = a.pokemonlist[parseInt(hb.cells[i].NearbyPokemon[0].PokedexNumber)-1];
                         console.log('1[+] There is a ' + pokemon.name + ' at ' + hb.cells[i].NearbyPokemon[0].DistanceMeters.toString() + ' meters');
                     }
                 }
 
-            });
-        }, 5000);
-
-    });
-});
-
-b.init(username1, password1, location1, provider1, function(err) {
-    if (err) throw err;
-
-    console.log('[i] Current location: ' + b.playerInfo.locationName);
-    console.log('[i] lat/long/alt: : ' + b.playerInfo.latitude + ' ' + b.playerInfo.longitude + ' ' + b.playerInfo.altitude);
-
-    b.GetProfile(function(err, profile) {
-        if (err) throw err;
-
-        console.log('[i] Username: ' + profile.username);
-        console.log('[i] Poke Storage: ' + profile.poke_storage);
-        console.log('[i] Item Storage: ' + profile.item_storage);
-
-        var poke = 0;
-        if (profile.currency[0].amount) {
-            poke = profile.currency[0].amount;
-        }
-
-        console.log('[i] Pokecoin: ' + poke);
-        console.log('[i] Stardust: ' + profile.currency[1].amount);
-
-        setInterval(function(){
-            b.Heartbeat(function(err,hb) {
-                if(err) {
-                    console.log(err);
-                }
-
-                for (var i = hb.cells.length - 1; i >= 0; i--) {
-                    if(hb.cells[i].NearbyPokemon[0]) {
-                        //console.log(a.pokemonlist[0])
-                        var pokemon = b.pokemonlist[parseInt(hb.cells[i].NearbyPokemon[0].PokedexNumber)-1];
-                        console.log('[+] There is a ' + pokemon.name + ' at ' + hb.cells[i].NearbyPokemon[0].DistanceMeters.toString() + ' meters');
-                    }
-                }
 
                 // Show WildPokemons (catchable) & catch
                 for (i = hb.cells.length - 1; i >= 0; i--) {
@@ -118,8 +78,68 @@ b.init(username1, password1, location1, provider1, function(err) {
                         });
                     }
                 }
+
+
             });
         }, 5000);
 
     });
 });
+
+// b.init(username1, password1, location1, provider1, function(err) {
+//     if (err) throw err;
+
+//     console.log('[i] Current location: ' + b.playerInfo.locationName);
+//     console.log('[i] lat/long/alt: : ' + b.playerInfo.latitude + ' ' + b.playerInfo.longitude + ' ' + b.playerInfo.altitude);
+
+//     b.GetProfile(function(err, profile) {
+//         if (err) throw err;
+
+//         console.log('[i] Username: ' + profile.username);
+//         console.log('[i] Poke Storage: ' + profile.poke_storage);
+//         console.log('[i] Item Storage: ' + profile.item_storage);
+
+//         var poke = 0;
+//         if (profile.currency[0].amount) {
+//             poke = profile.currency[0].amount;
+//         }
+
+//         console.log('[i] Pokecoin: ' + poke);
+//         console.log('[i] Stardust: ' + profile.currency[1].amount);
+
+//         setInterval(function(){
+//             b.Heartbeat(function(err,hb) {
+//                 if(err) {
+//                     console.log(err);
+//                 }
+
+//                 for (var i = hb.cells.length - 1; i >= 0; i--) {
+//                     if(hb.cells[i].NearbyPokemon[0]) {
+//                         //console.log(a.pokemonlist[0])
+//                         var pokemon = b.pokemonlist[parseInt(hb.cells[i].NearbyPokemon[0].PokedexNumber)-1];
+//                         console.log('[+] There is a ' + pokemon.name + ' at ' + hb.cells[i].NearbyPokemon[0].DistanceMeters.toString() + ' meters');
+//                     }
+//                 }
+
+//                 // Show WildPokemons (catchable) & catch
+//                 for (i = hb.cells.length - 1; i >= 0; i--) {
+//                     for (var j = hb.cells[i].WildPokemon.length - 1; j >= 0; j--)
+//                     {   // use async lib with each or eachSeries should be better :)
+//                         var currentPokemon = hb.cells[i].WildPokemon[j];
+//                         var pokedexInfo = b.pokemonlist[parseInt(currentPokemon.pokemon.PokemonId)-1];
+//                         console.log('[+] There is a ' + pokedexInfo.name + ' near!! I can try to catch it!');
+
+//                         b.EncounterPokemon(currentPokemon, function(suc, dat) {
+//                             console.log('Encountering pokemon ' + pokedexInfo.name + '...');
+//                             b.CatchPokemon(currentPokemon, 1, 1.950, 1, 1, function(xsuc, xdat) {
+//                                 var status = ['Unexpected error', 'Successful catch', 'Catch Escape', 'Catch Flee', 'Missed Catch'];
+//                                 console.log(status[xdat.Status]);
+//                             });
+//                         });
+//                     }
+//                 }
+//             });
+//         }, 5000);
+
+//     });
+// });
